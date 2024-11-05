@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Basic HTML Metadata -->
     <title>Riasaat Bin Raihan </title>
     <meta name="description" content="Welcome to the portfolio of Riasaat Bin Raihan, a developer and cybersecurity enthusiast. Explore my projects, blogs, and contact info.">
     <meta name="keywords" content="Riasaat, Riasaat Bin Raihan, portfolio, developer, cybersecurity, programming, technology, software, open source">
     <meta name="author" content="Riasaat Bin Raihan">
 
+    <!-- Open Graph Metadata for Social Media Sharing -->
     <meta property="og:title" content="Riasaat Bin Raihan">
     <meta property="og:description" content="Explore the professional portfolio of Riasaat Bin Raihan, a passionate developer and cybersecurity enthusiast.">
     <meta property="og:image" content="URL.jpg">
     <meta property="og:url" content="https://0xriasaat.github.io">
     <meta property="og:type" content="website">
 
+    <!-- Twitter Card Metadata -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Riasaat Bin Raihan ">
     <meta name="twitter:description" content="Explore the professional portfolio of Riasaat Bin Raihan, showcasing my skills, projects, and interests in cybersecurity and programming.">
@@ -23,8 +26,10 @@
     <meta name="x:image" content="https://pbs.twimg.com/profile_images/1803689362372304896/wTxyCd_X_400x400.jpg">
 
 
+    <!-- Robots Meta Tag for Indexing and Following -->
     <meta name="robots" content="index, follow">
 
+    <!-- Viewport for Mobile Responsiveness -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -41,6 +46,7 @@
             padding: 20px;
         }
 
+        /* Header and Navigation */
         header {
             text-align: center;
             padding: 50px 0;
@@ -63,17 +69,17 @@
             cursor: pointer;
         }
 
-
+        /* Section Styling */
         section {
             margin-top: 100px;
             padding: 20px;
             border-top: 1px solid #444;
-            display: none; 
+            display: none; /* Hide sections initially */
         }
     </style>
 </head>
 <body>
-
+    <!-- Header -->
     <header>
         <h1 id="header-text">RIASAAT</h1>
         <nav>
@@ -84,6 +90,7 @@
         </nav>
     </header>
 
+    <!-- Sections -->
     <main>
         <section id="home">
             <h2>Home</h2>
@@ -107,14 +114,17 @@
             <h2>Contact Me</h2>
             <p>Feel free to reach out or connect on social media.</p>
             
+            <!-- Social Media Links -->
             <div>
                 <a href="https://www.linkedin.com/in/riasaat-bin-raihan-raihan-a01681336" target="_blank" style="color: #0ff; text-decoration: none;">LinkedIn</a> |
                 <a href="https://github.com/0xriasaat" target="_blank" style="color: #0ff; text-decoration: none;">GitHub</a> |
                 <a href="https://x.com/0xriasaat" target="_blank" style="color: #0ff; text-decoration: none;">X</a>
             </div>
         
+            <!-- Email Link -->
             <p>Or email me directly at <a href="mailto:riasaat.raihan@gmail.com" style="color: #0ff; text-decoration: none;">riasaat.raihan@gmail.com</a>.</p>
         
+            <!-- Optional Contact Form -->
             <form action="https://formspree.io/f/xyzywylz" method="POST" style="margin-top: 20px;">
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" required style="background-color: #333; color: #d4d4d4; border: none; padding: 8px; width: 100%; margin-top: 8px;">
@@ -132,35 +142,60 @@
     </main>
 
     <script>
+        // Show the home section by default
         document.getElementById('home').style.display = 'block';
+    
+        // Characters for scrambling effect
         const scrambleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+[]{}|;:,.<>?~';
-
+    
+        // Function to create a random string of a specific length
         const getRandomString = (length) => {
             return Array.from({length}, () => scrambleChars[Math.floor(Math.random() * scrambleChars.length)]).join('');
         };
-
+    
+        // Function to scramble text
         const scrambleText = (element, originalText) => {
             const textLength = originalText.length;
             const scrambleInterval = setInterval(() => {
                 element.textContent = getRandomString(textLength);
             }, 50);
-
+    
+            // Restore the original text after 500ms
             setTimeout(() => {
                 clearInterval(scrambleInterval);
                 element.textContent = originalText;
             }, 500);
         };
-
+    
+        // Apply scramble effect on header and navigation links on hover
         document.getElementById('header-text').addEventListener('mouseenter', function() {
             scrambleText(this, this.textContent);
         });
-
+    
         document.querySelectorAll('.nav-link').forEach(link => {
             const originalText = link.dataset.text;
             link.addEventListener('mouseenter', function() {
                 scrambleText(this, originalText);
             });
-
+    
+            // Show the target section when clicked
+            link.addEventListener('click', function() {
+                const targetId = link.getAttribute('data-target');
+    
+                // Hide all sections
+                document.querySelectorAll('section').forEach(section => {
+                    section.style.display = 'none';
+                });
+    
+                // Show the selected section
+                document.getElementById(targetId).style.display = 'block';
+    
+                // Smooth scroll to the top of the section
+                document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    
+        // Quotes array
         const quotes = [
             '"Technology is best when it brings people together." – Matt Mullenweg',
             '"The science of today is the technology of tomorrow." – Edward Teller',
@@ -168,30 +203,40 @@
             '"Innovation distinguishes between a leader and a follower." – Steve Jobs',
             '"It has become appallingly obvious that our technology has exceeded our humanity." – Albert Einstein'
         ];
-
+    
+        // Function to change quotes periodically with scramble effect
         const quoteBox = document.getElementById('quote-box');
         let currentQuoteIndex = 0;
-
+    
         const changeQuote = () => {
             currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
-            scrambleText(quoteBox, quotes[currentQuoteIndex], 700);
+            scrambleText(quoteBox, quotes[currentQuoteIndex]);
         };
-
+    
+        // Rotate quotes every 5 seconds
         setInterval(changeQuote, 5000);
-
-
-            link.addEventListener('click', function() {
-                const targetId = link.getAttribute('data-target');
-
+    
+        // Show the correct section if a hash is present in the URL on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash.substring(1);
+            if (hash) {
+                // Hide all sections and show the one corresponding to the hash
                 document.querySelectorAll('section').forEach(section => {
                     section.style.display = 'none';
                 });
-
-                document.getElementById(targetId).style.display = 'block';
-
-                document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
-            });
-            const scrambleInterval = setInterval(() => {
+                const targetSection = document.getElementById(hash);
+                if (targetSection) {
+                    targetSection.style.display = 'block';
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            } else {
+                // Default to showing the home section if no hash is present
+                document.getElementById('home').style.display = 'block';
+            }
+        });
+    
+        // Periodic scrambling effect on header and navigation links
+        setInterval(() => {
             const randomChoice = Math.random() < 0.5 ? 'header' : 'nav';
             if (randomChoice === 'header') {
                 scrambleText(document.getElementById('header-text'), document.getElementById('header-text').textContent);
@@ -201,7 +246,7 @@
                 scrambleText(randomNavLink[randomIndex], randomNavLink[randomIndex].dataset.text);
             }
         }, 3000);
-        });
     </script>
+    
 </body>
 </html>
