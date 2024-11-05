@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Portfolio</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #d4d4d4;
+            font-family: "Courier New", Courier, monospace;
+            padding-top: 50px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        /* Header and Navigation */
+        header {
+            text-align: center;
+            padding: 50px 0;
+            padding-bottom: 10px; 
+        }
+        header h1 {
+            color: #0ff;
+            font-size: 4rem;
+            font-weight: bold;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        nav span {
+            color: #0ff;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Section Styling */
+        section {
+            margin-top: 100px;
+            padding: 20px;
+            border-top: 1px solid #444;
+            display: none; /* Hide sections initially */
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1 id="header-text">RIASAAT.TK</h1>
+        <nav>
+            <span class="nav-link" data-text="Home" data-target="home">Home</span>
+            <span class="nav-link" data-text="About" data-target="about">About</span>
+            <span class="nav-link" data-text="Blogs" data-target="blogs">Blogs</span>
+            <span class="nav-link" data-text="Contact" data-target="contact">Contact</span>
+        </nav>
+    </header>
+
+    <!-- Sections -->
+    <main>
+        <section id="home">
+            <h2>Home</h2>
+            <p>Welcome to my portfolio website. Explore the sections to learn more!</p>
+            <div id="quote-box">"Technology is best when it brings people together." – Matt Mullenweg</div>
+        </section>
+
+        <section id="about">
+            <h2>About Me</h2>
+            <p>Hey there! I'm a developer passionate about technology and open-source projects.</p>
+        </section>
+
+        <section id="blogs">
+            <h2>Blogs</h2>
+            <p>Here are some of my blogs:</p>
+            <ul>
+            </ul>
+        </section>
+
+        <section id="contact">
+            <h2>Contact Me</h2>
+            <p>Feel free to <a href="mailto:you@example.com">reach out</a> or connect on social media.</p>
+        </section>
+    </main>
+
+    <script>
+        // Characters for scrambling effect
+        const scrambleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+[]{}|;:,.<>?~';
+
+        // Function to create a random string of a specific length
+        const getRandomString = (length) => {
+            return Array.from({length}, () => scrambleChars[Math.floor(Math.random() * scrambleChars.length)]).join('');
+        };
+
+        // Function to scramble text
+        const scrambleText = (element, originalText) => {
+            const textLength = originalText.length;
+            const scrambleInterval = setInterval(() => {
+                element.textContent = getRandomString(textLength);
+            }, 50);
+
+            // Restore the original text after 500ms
+            setTimeout(() => {
+                clearInterval(scrambleInterval);
+                element.textContent = originalText;
+            }, 500);
+        };
+
+        // Apply scramble effect on header and navigation links on hover
+        document.getElementById('header-text').addEventListener('mouseenter', function() {
+            scrambleText(this, this.textContent);
+        });
+
+        document.querySelectorAll('.nav-link').forEach(link => {
+            const originalText = link.dataset.text;
+            link.addEventListener('mouseenter', function() {
+                scrambleText(this, originalText);
+            });
+
+                    // Quotes array
+        const quotes = [
+            '"Technology is best when it brings people together." – Matt Mullenweg',
+            '"The science of today is the technology of tomorrow." – Edward Teller',
+            '"The real danger is not that computers will begin to think like men, but that men will begin to think like computers." – Sydney J. Harris',
+            '"Innovation distinguishes between a leader and a follower." – Steve Jobs',
+            '"It has become appallingly obvious that our technology has exceeded our humanity." – Albert Einstein'
+        ];
+
+        // Function to change quotes periodically with scramble effect
+        const quoteBox = document.getElementById('quote-box');
+        let currentQuoteIndex = 0;
+
+        const changeQuote = () => {
+            currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+            scrambleText(quoteBox, quotes[currentQuoteIndex], 700);
+        };
+
+        // Rotate quotes every 5 seconds
+        setInterval(changeQuote, 5000);
+
+
+            // Show the target section when clicked
+            link.addEventListener('click', function() {
+                const targetId = link.getAttribute('data-target');
+
+                // Hide all sections
+                document.querySelectorAll('section').forEach(section => {
+                    section.style.display = 'none';
+                });
+
+                // Show the selected section
+                document.getElementById(targetId).style.display = 'block';
+
+                // Smooth scroll to the top of the section
+                document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+            });
+            const scrambleInterval = setInterval(() => {
+            // Randomly choose between the header text and one of the navigation links
+            const randomChoice = Math.random() < 0.5 ? 'header' : 'nav';
+            if (randomChoice === 'header') {
+                scrambleText(document.getElementById('header-text'), document.getElementById('header-text').textContent);
+            } else {
+                const randomNavLink = document.querySelectorAll('.nav-link');
+                const randomIndex = Math.floor(Math.random() * randomNavLink.length);
+                scrambleText(randomNavLink[randomIndex], randomNavLink[randomIndex].dataset.text);
+            }
+        }, 3000);
+        });
+    </script>
+</body>
+</html>
